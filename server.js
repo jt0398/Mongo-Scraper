@@ -24,12 +24,20 @@ var MONGODB_URI =
 
 console.log(MONGODB_URI);
 
-mongoose.connect(MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+mongoose
+  .connect(MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .catch(error => {
+    Console.log(error);
+  });
 
 mongoose.set("useCreateIndex", true);
+
+mongoose.connection.on("error", error => {
+  Console.log(error);
+});
 
 app.get("/", function(req, res) {
   res.render("index");
