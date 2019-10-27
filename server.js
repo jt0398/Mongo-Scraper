@@ -22,10 +22,13 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 var MONGODB_URI =
   process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
+console.log(MONGODB_URI);
+
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
+
 mongoose.set("useCreateIndex", true);
 
 app.get("/", function(req, res) {
@@ -33,10 +36,14 @@ app.get("/", function(req, res) {
 });
 
 app.get("/scrape", function(req, res) {
+  console.log("Begin Scrape");
+
   axios
     .get("https://techcrunch.com/")
     .then(function(response) {
       const $ = cheerio.load(response.data);
+
+      console.log("Axios return response");
 
       $(".post-block").each(function(i, element) {
         const title = $(element)
