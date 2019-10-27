@@ -85,7 +85,9 @@ app.get("/scrape", function(req, res) {
             new: true,
             upsert: true
           }
-        );
+        ).then(dbArticle => {
+          console.log(dbArticle);
+        });
       });
 
       res.sendStatus(200);
