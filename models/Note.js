@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 
 var Schema = mongoose.Schema;
 
-var NoteSchema = new SVGClipPathElement({
+var NoteSchema = new Schema({
   body: String
 });
 

@@ -8,6 +8,10 @@ var ArticleSchema = new Schema({
     unique: true
   },
   url: String,
+  img: String,
+  summary: String,
+  date: Date,
+  author: String,
   notes: [
     {
       type: Schema.Types.ObjectId,
