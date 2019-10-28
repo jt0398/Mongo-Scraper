@@ -3,6 +3,7 @@ require("dotenv").config();
 var express = require("express");
 var exphbs = require("express-handlebars");
 var mongoose = require("mongoose");
+var logger = require("morgan");
 var axios = require("axios");
 var cheerio = require("cheerio");
 
@@ -11,6 +12,7 @@ var db = require("./models");
 var app = express();
 var PORT = process.env.PORT || 3000;
 
+app.use(logger("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static("public"));
@@ -21,8 +23,6 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 
 var MONGODB_URI =
   process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
-
-console.log(MONGODB_URI);
 
 mongoose
   .connect(MONGODB_URI, {
@@ -44,14 +44,10 @@ app.get("/", function(req, res) {
 });
 
 app.get("/scrape", function(req, res) {
-  console.log("Begin Scrape");
-
   axios
     .get("https://techcrunch.com/")
     .then(function(response) {
       const $ = cheerio.load(response.data);
-
-      console.log("Axios return response");
 
       $(".post-block").each(function(i, element) {
         const title = $(element)
@@ -84,8 +80,6 @@ app.get("/scrape", function(req, res) {
           .text()
           .trim();
 
-        console.log(title, url, img, summary, date, author);
-
         db.Article.findOneAndUpdate(
           { title: title },
           {
@@ -100,9 +94,7 @@ app.get("/scrape", function(req, res) {
             new: true,
             upsert: true
           }
-        ).then(dbArticle => {
-          console.log(dbArticle);
-        });
+        );
       });
 
       res.sendStatus(200);
