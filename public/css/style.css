@@ -7,3 +7,7 @@ body {
 main {
   flex: 1 0 auto;
 }
+
+.card-image {
+  max-width: 300px !important;
+}

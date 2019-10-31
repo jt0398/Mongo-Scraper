@@ -1,0 +1,27 @@
+{{#each articles}}
+<div class="card horizontal">
+    <div class="card-image">
+        <img src="{{img}}">
+    </div>
+    <div class="card-stacked">
+        <div class="card-content">
+            <div class="right"><a data-id="{{_id}}" class=" btn-floating btn-small red waves-effect waves-light"><i
+                        class="material-icons">favorite_border</i></a>
+            </div>
+            <span class="card-title"><a href="{{url}}" target="_blank"
+                    class="red-text text-darken-4">{{title}}</a></span>
+            <address>By {{author}}</address>
+            <time>{{date}}</time>
+            <p>{{summary}}...</p>
+        </div>
+    </div>
+</div>
+{{else}}
+<div class="card horizontal">
+    <div class="card-stacked">
+        <div class="card-content">
+            <p class="text-center">No Articles</p>
+        </div>
+    </div>
+</div>
+{{/each}}

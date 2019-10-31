@@ -16,7 +16,8 @@
 <body>
     <header>
         <nav class="red darken-4" role="navigation">
-            <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo">Mongo Scraper</a>
+            <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo">Mongo
+                    Scraper</a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="/"><i class="material-icons left">home</i>Home</a></li>
                     <li><a href="#"><i class="material-icons left">save</i>Saved Articles</a></li>
@@ -26,8 +27,8 @@
                 </ul>
                 <ul id="nav-mobile" class="sidenav">
                     <li><a href="/"><i class="material-icons left">home</i>Home</a></li>
-                    <li><a href="#"><i class="material-icons left">save</i>Saved Articles</a></li>
-                    <li><a href="#"><i class="material-icons left">cloud_download</i>Scrape New
+                    <li><a href="/articles/saved"><i class="material-icons left">save</i>Saved Articles</a></li>
+                    <li><a href="#" id="scrape-btn"><i class="material-icons left">cloud_download</i>Scrape New
                             Articles</a></li>
                     <li><a href="#"><i class="material-icons left">delete</i>Clear Articles</a></li>
                 </ul>
@@ -36,14 +37,19 @@
         </nav>
     </header>
     <main>
+        <h1 class="header center red-text">TechCrunch</h1>
+        <div class="row center">
+            <h5 class="header col s12 light">Reporting on the business of technology, startups, venture capital funding,
+                and Silicon Valley.</h5>
+        </div>
         <div class="container">
             {{{body}}}
         </div>
     </main>
-    <footer class="page-footer">
+    <footer class="page-footer red darken-1">
         <div class="footer-copyright">
             <div class="container">
-                Tech Crunch Mongo Scraper
+                TechCrunch Mongo Scraper
             </div>
         </div>
     </footer>
@@ -52,6 +58,7 @@
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="js/init.js"></script>
+    <script src="js/script.js"></script>
 
 
 </body>

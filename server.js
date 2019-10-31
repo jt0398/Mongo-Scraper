@@ -4,10 +4,6 @@ var express = require("express");
 var exphbs = require("express-handlebars");
 var mongoose = require("mongoose");
 var logger = require("morgan");
-var axios = require("axios");
-var cheerio = require("cheerio");
-
-var db = require("./models");
 
 var app = express();
 var PORT = process.env.PORT || 3000;
@@ -30,80 +26,16 @@ mongoose
     useUnifiedTopology: true
   })
   .catch(error => {
-    Console.log(error);
+    console.log(error);
   });
 
 mongoose.set("useCreateIndex", true);
 
 mongoose.connection.on("error", error => {
-  Console.log(error);
+  console.log(error);
 });
 
-app.get("/", function(req, res) {
-  res.render("index");
-});
-
-app.get("/scrape", function(req, res) {
-  axios
-    .get("https://techcrunch.com/")
-    .then(function(response) {
-      const $ = cheerio.load(response.data);
-
-      $(".post-block").each(function(i, element) {
-        const title = $(element)
-          .find("header h2 a")
-          .text()
-          .trim();
-
-        const url = $(element)
-          .find("header h2 a")
-          .attr("href")
-          .trim();
-
-        const img = $(element)
-          .find("footer figure a img")
-          .attr("src")
-          .trim();
-
-        const summary = $(element)
-          .find("div.post-block__content")
-          .text()
-          .trim();
-
-        const date = $(element)
-          .find("div time")
-          .text()
-          .trim();
-
-        const author = $(element)
-          .find("span.river-byline__authors a")
-          .text()
-          .trim();
-
-        db.Article.findOneAndUpdate(
-          { title: title },
-          {
-            title: title,
-            url: url,
-            img: img,
-            summary: summary,
-            date: date,
-            author: author
-          },
-          {
-            new: true,
-            upsert: true
-          }
-        );
-      });
-
-      res.sendStatus(200);
-    })
-    .catch(function(error) {
-      console.log(error);
-      res.sendStatus(400);
-    });
-});
+require("./controllers/indexRouter")(app);
 
 app.listen(PORT, function() {
   const HOST = process.env.HOST || "http://localhost";

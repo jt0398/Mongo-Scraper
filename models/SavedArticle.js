@@ -11,7 +11,13 @@ var ArticleSchema = new Schema({
   img: String,
   summary: String,
   date: Date,
-  author: String
+  author: String,
+  notes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Note"
+    }
+  ]
 });
 
 var Article = mongoose.model("Article", ArticleSchema);
