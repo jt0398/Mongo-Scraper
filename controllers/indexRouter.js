@@ -68,15 +68,17 @@ module.exports = function(app) {
                 new: true,
                 upsert: true
               }
-            ).exec()
+            )
           );
-
-          return Promise.all(promises).then(dbArticles => {
-            res.status(200).json({ count: dbArticles.length });
-          });
         });
+
+        return Promise.all(promises)
+          .then(dbArticles => {
+            res.json({ count: dbArticles.length });
+          })
+          .catch(error => console.log(error));
       })
-      .catch(function(error) {
+      .catch(error => {
         console.log(error);
         res.sendStatus(400);
       });

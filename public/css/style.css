@@ -11,3 +11,7 @@ main {
 .card-image {
   max-width: 300px !important;
 }
+
+time {
+  display: inline;
+}
