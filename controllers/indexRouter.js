@@ -3,11 +3,18 @@ var db = require("../models");
 var axios = require("axios");
 var cheerio = require("cheerio");
 
+var Moment = require("moment");
+
 module.exports = function(app) {
   app.get("/", function(req, res) {
     db.Article.find({})
       .sort({ date: -1 })
       .then(dbArticles => {
+        dbArticles.map(article => {
+          return Moment(article.date).format("MM/DD/YYYY");
+        });
+
+        console.log(dbArticles);
         res.render("index", { articles: dbArticles });
       });
   });
@@ -51,7 +58,7 @@ module.exports = function(app) {
             .text()
             .trim();
 
-          console.log(title);
+          console.log(title, Moment(date).format("MM/DD/YYYY"));
 
           promises.push(
             db.Article.findOneAndUpdate(
@@ -61,7 +68,7 @@ module.exports = function(app) {
                 url: url,
                 img: img,
                 summary: summary,
-                date: date,
+                date: Moment(date).format("MM/DD/YYYY"),
                 author: author
               },
               {
@@ -84,5 +91,27 @@ module.exports = function(app) {
       });
   });
 
-  app.post("/api/articles", function(req, res) {});
+  app.post("/api/articles", function(req, res) {
+    const id = req.body.id;
+
+    async () => {
+      try {
+        const dbArticle = await db.Article.find({ _id: id });
+        const { title, url, img, summary, date, author } = dbArticle;
+        await db.SavedArticle.create({
+          title,
+          url,
+          img,
+          summary,
+          date,
+          author
+        });
+        db.Article.deleteOne({ _id: id });
+
+        res.sendStatus(200);
+      } catch (error) {
+        res.sendStatus(400);
+      }
+    };
+  });
 };

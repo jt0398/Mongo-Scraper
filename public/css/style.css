@@ -12,6 +12,7 @@ main {
   max-width: 300px !important;
 }
 
+address,
 time {
   display: inline;
 }
