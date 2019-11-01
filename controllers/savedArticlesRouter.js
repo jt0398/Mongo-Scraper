@@ -10,6 +10,6 @@ module.exports = function(app) {
   });
 
   app.delete("/api/savedarticles/delete", function(req, res) {
-    const id = req.params.id;
+    const id = req.body.id;
   });
 };

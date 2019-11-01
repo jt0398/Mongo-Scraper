@@ -40,4 +40,12 @@ $(document).ready(function() {
       location.href = "/";
     });
   });
+
+  $("#clear-btn").on("click", function(event) {
+    event.preventDefault();
+
+    $.ajax("/api/articles", { type: "DELETE" }).then(response => {
+      location.reload();
+    });
+  });
 });

@@ -94,8 +94,6 @@ module.exports = function(app) {
   app.post("/api/articles", async function(req, res) {
     const id = req.body.id;
 
-    console.log("Saved Article ---------" + id);
-
     try {
       const dbArticle = await db.Article.find({ _id: id });
 
@@ -115,6 +113,19 @@ module.exports = function(app) {
       });
 
       await db.Article.deleteOne({ _id: id });
+
+      res.sendStatus(200);
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(400);
+    }
+  });
+
+  app.delete("/api/articles", async function(req, res) {
+    try {
+      await db.Note.deleteMany({});
+      await db.SavedArticle.deleteMany({});
+      await db.Article.deleteMany({});
 
       res.sendStatus(200);
     } catch (error) {
