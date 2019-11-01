@@ -10,11 +10,10 @@ module.exports = function(app) {
     db.Article.find({})
       .sort({ date: -1 })
       .then(dbArticles => {
-        dbArticles.map(article => {
+        /*   dbArticles.map(article => {
           return Moment(article.date).format("MM/DD/YYYY");
-        });
+        }); */
 
-        console.log(dbArticles);
         res.render("index", { articles: dbArticles });
       });
   });
@@ -58,8 +57,6 @@ module.exports = function(app) {
             .text()
             .trim();
 
-          console.log(title, Moment(date).format("MM/DD/YYYY"));
-
           promises.push(
             db.Article.findOneAndUpdate(
               { title: title },
@@ -68,7 +65,7 @@ module.exports = function(app) {
                 url: url,
                 img: img,
                 summary: summary,
-                date: Moment(date).format("MM/DD/YYYY"),
+                date: date,
                 author: author
               },
               {
@@ -80,8 +77,11 @@ module.exports = function(app) {
         });
 
         return Promise.all(promises)
-          .then(dbArticles => {
-            res.json({ count: dbArticles.length });
+          .then(() => {
+            return db.Article.find({}).then(dbArticles => {
+              console.log(dbArticles.length);
+              res.json({ count: dbArticles.length });
+            });
           })
           .catch(error => console.log(error));
       })
@@ -91,27 +91,35 @@ module.exports = function(app) {
       });
   });
 
-  app.post("/api/articles", function(req, res) {
+  app.post("/api/articles", async function(req, res) {
     const id = req.body.id;
 
-    async () => {
-      try {
-        const dbArticle = await db.Article.find({ _id: id });
-        const { title, url, img, summary, date, author } = dbArticle;
-        await db.SavedArticle.create({
-          title,
-          url,
-          img,
-          summary,
-          date,
-          author
-        });
-        db.Article.deleteOne({ _id: id });
+    console.log("Saved Article ---------" + id);
 
-        res.sendStatus(200);
-      } catch (error) {
-        res.sendStatus(400);
-      }
-    };
+    try {
+      const dbArticle = await db.Article.find({ _id: id });
+
+      console.log(id, dbArticle[0]);
+
+      const { title, url, img, summary, date, author } = dbArticle[0];
+
+      console.log(title, url, img, summary, date, author);
+
+      await db.SavedArticle.create({
+        title,
+        url,
+        img,
+        summary,
+        date,
+        author
+      });
+
+      await db.Article.deleteOne({ _id: id });
+
+      res.sendStatus(200);
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(400);
+    }
   });
 };

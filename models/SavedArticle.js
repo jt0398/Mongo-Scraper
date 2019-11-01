@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 
 var Schema = mongoose.Schema;
 
-var ArticleSchema = new Schema({
+var SavedArticleSchema = new Schema({
   title: {
     type: String,
     unique: true
@@ -20,6 +20,6 @@ var ArticleSchema = new Schema({
   ]
 });
 
-var Article = mongoose.model("Article", ArticleSchema);
+var SavedArticle = mongoose.model("SavedArticle", SavedArticleSchema);
 
-module.exports = Article;
+module.exports = SavedArticle;

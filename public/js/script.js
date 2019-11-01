@@ -1,38 +1,42 @@
 $(document).ready(function() {
   const dataScraped = localStorage.getItem("dataScraped");
 
-  if()
+  $("#scrapeSpinner").addClass("hide");
+
+  if (dataScraped) {
+    $("#newScraped").removeClass("hide");
+    $("#newScraped").text(dataScraped);
+
+    setTimeout(() => {
+      $("#newScraped").text("");
+      $("#newScraped").addClass("hide");
+      localStorage.clear();
+    }, 30000);
+  }
 
   $("#scrape-btn").on("click", function(event) {
     event.preventDefault();
 
-    $("#spinner").html(
-      `<div class="preloader-wrapper active">
-      <div class="spinner-layer spinner-red-only">
-          <div class="circle-clipper left">
-              <div class="circle"></div>
-          </div>
-          <div class="gap-patch">
-              <div class="circle"></div>
-          </div>
-          <div class="circle-clipper right">
-              <div class="circle"></div>
-          </div>
-      </div>
-  </div>
-  <h4>Scraping..</h4>`
-    );
+    $("#scrapeSpinner").removeClass("hide");
 
     $.ajax("/api/scrape").then(data => {
-      localStorage.setItem("dataScraped", data.count);
-      location.href = "/";
+      const newCount = data.count - $(".card-title").length;
+      console.log(newCount, data.count, $(".card-title").length);
+      if (newCount > 0) {
+        localStorage.setItem("dataScraped", newCount);
+        location.href = "/";
+      } else {
+        $("#scrapeSpinner").addClass("hide");
+      }
     });
   });
 
   $(".saveArticle").on("click", function(event) {
     event.preventDefault();
 
-    $.ajax("/api/articles").then(response => {
+    const id = $(this).data("id");
+
+    $.post("/api/articles", { id }).then(response => {
       location.href = "/";
     });
   });

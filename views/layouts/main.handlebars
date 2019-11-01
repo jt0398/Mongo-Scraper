@@ -20,14 +20,29 @@
                     Scraper</a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="/"><i class="material-icons left">home</i>Home</a></li>
-                    <li><a href="/articles/saved"><i class="material-icons left">save</i>Saved Articles</a></li>
+                    <li><a href="/savedarticles"><i class="material-icons left">save</i>Saved Articles</a></li>
                     <li><a id="scrape-btn"><i class="material-icons left">cloud_download</i>Scrape New
-                            Articles</a></li>
+                            Articles <span class="new badge hide" data-badge-caption="new" id="newScraped">4</span>
+                            <div class="preloader-wrapper small active hide" id="scrapeSpinner">
+                                <div class="spinner-layer spinner-green-only">
+                                    <div class="circle-clipper left">
+                                        <div class="circle"></div>
+                                    </div>
+                                    <div class="gap-patch">
+                                        <div class="circle"></div>
+                                    </div>
+                                    <div class="circle-clipper right">
+                                        <div class="circle"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
                     <li><a href="#"><i class="material-icons left">delete</i>Clear Articles</a></li>
                 </ul>
                 <ul id="nav-mobile" class="sidenav">
                     <li><a href="/"><i class="material-icons left">home</i>Home</a></li>
-                    <li><a href="/articles/saved"><i class="material-icons left">save</i>Saved Articles</a></li>
+                    <li><a href="/savedarticles"><i class="material-icons left">save</i>Saved Articles</a></li>
                     <li><a id="scrape-btn"><i class="material-icons left">cloud_download</i>Scrape New
                             Articles</a></li>
                     <li><a href="#"><i class="material-icons left">delete</i>Clear Articles</a></li>
@@ -39,8 +54,8 @@
     <main>
         <h1 class="header center red-text">TechCrunch</h1>
         <div class="row center">
-            <h5 class="header col s12 light">Reporting on the business of technology, startups, venture capital funding,
-                and Silicon Valley.</h5>
+            <h6 class="header col s12 light">Reporting on the business of technology, startups, venture capital funding,
+                and Silicon Valley.</h6>
         </div>
         <div class="container">
             {{{body}}}

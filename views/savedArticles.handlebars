@@ -1,5 +1,4 @@
-<div class="center" id="spinner">
-</div>
+<h4>Saved Articles</h4>
 
 {{#each articles}}
 <div class="card horizontal">
@@ -8,15 +7,17 @@
     </div>
     <div class="card-stacked">
         <div class="card-content">
-            <div class="right"><a data-id="{{_id}}"
-                    class="btn-floating btn-small red waves-effect waves-light saveArticle"><i
-                        class="material-icons">favorite_border</i></a>
-            </div>
             <span class="card-title"><a href="{{url}}" target="_blank"
                     class="red-text text-darken-4">{{title}}</a></span>
             <address>By {{author}}</address>
             <time>{{date}}</time>
             <p>{{summary}}...</p>
+        </div>
+        <div class="card-action">
+            <a data-id="{{_id}}" class="btn btn-small red waves-effect waves-light deleteArticle"><i
+                    class="material-icons">delete</i> Delete Article</a> <a data-id="{{_id}}"
+                class="btn btn-small red waves-effect waves-light addNotes"><i class="material-icons">comment</i> Add
+                Notes</a>
         </div>
     </div>
 </div>

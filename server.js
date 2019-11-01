@@ -30,12 +30,14 @@ mongoose
   });
 
 mongoose.set("useCreateIndex", true);
+mongoose.set("useFindAndModify", false);
 
 mongoose.connection.on("error", error => {
   console.log(error);
 });
 
 require("./controllers/indexRouter")(app);
+require("./controllers/savedArticlesRouter")(app);
 
 app.listen(PORT, function() {
   const HOST = process.env.HOST || "http://localhost";
