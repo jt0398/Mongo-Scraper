@@ -2,6 +2,8 @@ var mongoose = require("mongoose");
 
 var Schema = mongoose.Schema;
 
+var Note = require("./Note");
+
 var SavedArticleSchema = new Schema({
   title: {
     type: String,
@@ -20,10 +22,10 @@ var SavedArticleSchema = new Schema({
   ]
 });
 
-/* SavedArticleSchema.pre("remove", function(next){
-
-  next();
-}); */
+SavedArticleSchema.pre("remove", async function(next) {
+  console.log(this.notes);
+  await Note.deleteMany({ _id: { $in: this.notes } }).exec();
+});
 
 var SavedArticle = mongoose.model("SavedArticle", SavedArticleSchema);
 

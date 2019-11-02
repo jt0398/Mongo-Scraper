@@ -26,7 +26,7 @@ module.exports = function(app) {
         author
       });
 
-      await db.SavedArticle.deleteOne({ _id: id }).exec();
+      await db.SavedArticle.remove({ _id: id }).exec();
 
       res.sendStatus(200);
     } catch (error) {

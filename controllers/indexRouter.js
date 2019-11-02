@@ -119,9 +119,9 @@ module.exports = function(app) {
 
   app.delete("/api/articles", async function(req, res) {
     try {
-      await db.Note.deleteMany({});
-      await db.SavedArticle.deleteMany({});
-      await db.Article.deleteMany({});
+      await db.Note.remove({});
+      await db.SavedArticle.remove({});
+      await db.Article.remove({});
 
       res.sendStatus(200);
     } catch (error) {
