@@ -16,3 +16,7 @@ address,
 time {
   display: inline;
 }
+
+#articleNotes .row {
+  margin: 0px;
+}

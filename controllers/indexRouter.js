@@ -95,13 +95,9 @@ module.exports = function(app) {
     const id = req.body.id;
 
     try {
-      const dbArticle = await db.Article.find({ _id: id });
-
-      console.log(id, dbArticle[0]);
+      const dbArticle = await db.Article.find({ _id: id }).exec();
 
       const { title, url, img, summary, date, author } = dbArticle[0];
-
-      console.log(title, url, img, summary, date, author);
 
       await db.SavedArticle.create({
         title,
@@ -112,7 +108,7 @@ module.exports = function(app) {
         author
       });
 
-      await db.Article.deleteOne({ _id: id });
+      await db.Article.deleteOne({ _id: id }).exec();
 
       res.sendStatus(200);
     } catch (error) {

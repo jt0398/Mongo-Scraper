@@ -20,6 +20,11 @@ var SavedArticleSchema = new Schema({
   ]
 });
 
+/* SavedArticleSchema.pre("remove", function(next){
+
+  next();
+}); */
+
 var SavedArticle = mongoose.model("SavedArticle", SavedArticleSchema);
 
 module.exports = SavedArticle;

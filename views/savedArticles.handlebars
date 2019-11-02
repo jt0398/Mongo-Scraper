@@ -25,8 +25,26 @@
 <div class="card horizontal">
     <div class="card-stacked">
         <div class="card-content">
-            <p class="text-center">No articles found. Please try scraping articles.</p>
+            <p class="text-center">No saved articles found. Please try <a href="/">browsing articles</a>.</p>
         </div>
     </div>
 </div>
 {{/each}}
+
+<div id="articleNotes" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h4 id="articleTitle"></h4>
+        <h5>Notes:</h5>
+        <ul class="collection">
+        </ul>
+        <br>
+        <div class="input-field">
+            <textarea id="txtNotes" class="materialize-textarea" data-length="120"></textarea>
+            <label for="txtNotes">New Notes</label>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a id="saveNotes" class="waves-effect waves-red btn red">Add Note</a>
+        <a class="modal-close waves-effect waves-red btn red">Close</a>
+    </div>
+</div>
