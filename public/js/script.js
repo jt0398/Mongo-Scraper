@@ -21,7 +21,7 @@ $(document).ready(function() {
 
     $.ajax("/api/scrape").then(data => {
       const newCount = data.count - $(".card-title").length;
-      console.log(newCount, data.count, $(".card-title").length);
+
       if (newCount > 0) {
         localStorage.setItem("dataScraped", newCount);
         location.href = "/";
@@ -83,7 +83,7 @@ $(document).ready(function() {
     $.ajax(`/api/savedarticles/${id}/notes/`).then(article => {
       $("#articleTitle").text(article.title);
 
-      console.log(article, article.notes.length);
+      $("#articleNotes .modal-content .collection").empty();
 
       if (article.notes.length === 0) {
         $("#articleNotes .modal-content .collection").append(
@@ -93,12 +93,26 @@ $(document).ready(function() {
         let htmlNotes = "";
 
         for (const note of article.notes) {
-          console.log(note);
-
           htmlNotes += `<li class="collection-item"><div class="row"><div class="col s11">${note.body}</div><div class="col s1"><a data-id='${note._id}' class='btn-floating btn-small red waves-effect waves-light deleteNote'><i class='material-icons'>delete</i></a></div></div></li>`;
         }
 
-        $("#articleNotes .modal-content .collection").empty();
+        htmlNotes += `<script language="javascript">
+        $(".deleteNote").on("click", function(event) {
+          event.preventDefault();
+      
+          const id = $(this).data("id");
+      
+          console.log(id);
+      
+          $.ajax("/api/savedarticles/notes/${id}/delete", { type: "DELETE" }).then(
+            response => {
+              $(this).parent().parent().parent().remove();
+            }
+          );
+        });
+        </script>
+        `;
+
         $("#articleNotes .modal-content .collection").append(htmlNotes);
       }
     });
@@ -115,11 +129,5 @@ $(document).ready(function() {
       M.textareaAutoResize($("#txtNotes"));
       loadNotes(id);
     });
-  });
-
-  $(".deleteNote").on("click", function(event) {
-    event.preventDefault();
-
-    const id = $(this).data("id");
   });
 });
