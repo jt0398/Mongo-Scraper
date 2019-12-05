@@ -24,7 +24,7 @@ To run Mongo Scraper, you will first need to clone the repository to your local 
     $ git clone git@github.com:jt0398/Mongo-Scraper.git
     ````
 
-You will also need to download [MongoDB](https://www.mongodb.com/download-center/community) and [Robo 3T](https://robomongo.org/download).
+You will also need to download and install [MongoDB](https://www.mongodb.com/download-center/community) and [Robo 3T](https://robomongo.org/download).
 
 Open a new terminal and browser to the folder where the project is cloned. Run the command.
 
